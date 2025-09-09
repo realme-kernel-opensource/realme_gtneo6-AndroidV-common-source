@@ -1391,6 +1391,7 @@ static void binder_cleanup_ref_olocked(struct binder_ref *ref)
 		dbitmap_clear_bit(dmap, ref->data.desc);
 	rb_erase(&ref->rb_node_desc, &ref->proc->refs_by_desc);
 	rb_erase(&ref->rb_node_node, &ref->proc->refs_by_node);
+	trace_android_vh_binder_set_desc_bit(ref->proc, ref->data.desc);
 
 	binder_node_inner_lock(ref->node);
 	if (ref->data.strong)
@@ -6310,6 +6311,7 @@ static int binder_open(struct inode *nodp, struct file *filp)
 	INIT_LIST_HEAD(&proc_wrapper(proc)->delivered_freeze);
 	INIT_LIST_HEAD(&proc->waiting_threads);
 	filp->private_data = proc;
+	trace_android_vh_binder_desc_init(proc);
 
 	mutex_lock(&binder_procs_lock);
 	hlist_for_each_entry(itr, &binder_procs, proc_node) {

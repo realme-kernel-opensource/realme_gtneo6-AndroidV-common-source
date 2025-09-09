@@ -2671,6 +2671,7 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
 					unlinked_skb = skb;
 					skb = skb_peek(&sk->sk_receive_queue);
 				}
+
 			} else if (!sock_flag(sk, SOCK_URGINLINE)) {
 				skb = skb_peek_next(skb, &sk->sk_receive_queue);
 			}
